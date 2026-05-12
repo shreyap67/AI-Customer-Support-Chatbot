@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SupportAI — Intelligent Customer Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+<!-- ═══════════════════════════ SIDEBAR ═══════════════════════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon">
+      <i class="fa-solid fa-robot"></i>
+    </div>
+    <div>
+      <div class="brand-name">SupportAI</div>
+      <div class="brand-tagline">Intelligent Assistant</div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a href="/" class="nav-item active">
+      <i class="fa-solid fa-comments"></i>
+      <span>Live Chat</span>
+    </a>
+    <a href="/admin" class="nav-item">
+      <i class="fa-solid fa-chart-line"></i>
+      <span>Analytics</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-section">
+    <div class="section-label">Quick Topics</div>
+    <button class="quick-btn" onclick="sendQuick('What are your pricing plans?')">
+      <i class="fa-solid fa-tag"></i> Pricing
+    </button>
+    <button class="quick-btn" onclick="sendQuick('How do I get started?')">
+      <i class="fa-solid fa-rocket"></i> Getting Started
+    </button>
+    <button class="quick-btn" onclick="sendQuick('I need help with my account')">
+      <i class="fa-solid fa-user-gear"></i> Account
+    </button>
+    <button class="quick-btn" onclick="sendQuick('How to contact support?')">
+      <i class="fa-solid fa-headset"></i> Contact
+    </button>
+    <button class="quick-btn" onclick="sendQuick('Tell me about your features')">
+      <i class="fa-solid fa-star"></i> Features
+    </button>
+  </div>
+
+  <div class="sidebar-footer">
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+      <i class="fa-solid fa-moon"></i> Dark Mode
+    </button>
+    <button class="clear-btn" onclick="clearChat()">
+      <i class="fa-solid fa-trash"></i> Clear Chat
+    </button>
+  </div>
+</aside>
+
+<!-- ═══════════════════════════ MAIN PANEL ═══════════════════════════ -->
+<main class="main-panel">
+  <!-- Header -->
+  <header class="chat-header">
+    <button class="sidebar-toggle" id="sidebarToggle">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="header-bot-info">
+      <div class="bot-avatar-sm">
+        <span class="pulse-dot"></span>
+        <i class="fa-solid fa-robot"></i>
+      </div>
+      <div>
+        <div class="header-bot-name">SupportAI Assistant</div>
+        <div class="header-bot-status">Online · Powered by NLP</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" onclick="exportChat()" title="Export chat">
+        <i class="fa-solid fa-download"></i>
+      </button>
+      <a href="/admin" class="icon-btn" title="Dashboard">
+        <i class="fa-solid fa-gauge-high"></i>
+      </a>
+    </div>
+  </header>
+
+  <!-- Chat window -->
+  <div class="chat-window" id="chatWindow">
+    <!-- Welcome message injected by JS -->
+  </div>
+
+  <!-- Typing indicator (hidden by default) -->
+  <div class="typing-bar" id="typingBar" style="display:none">
+    <div class="typing-bubble">
+      <span></span><span></span><span></span>
+    </div>
+    <span class="typing-label">SupportAI is thinking…</span>
+  </div>
+
+  <!-- Input area -->
+  <div class="input-area">
+    <div class="input-wrapper">
+      <!-- Voice button -->
+      <button class="voice-btn" id="voiceBtn" title="Voice input">
+        <i class="fa-solid fa-microphone"></i>
+      </button>
+
+      <textarea
+        id="userInput"
+        class="chat-input"
+        placeholder="Ask me anything…"
+        rows="1"
+        maxlength="500"
+        autocomplete="off"
+      ></textarea>
+
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </div>
+    <div class="input-meta">
+      <span id="charCount">0 / 500</span>
+      <span>Press <kbd>Enter</kbd> to send · <kbd>Shift+Enter</kbd> for newline</span>
+    </div>
+  </div>
+</main>
+
+<!-- ═══════════════════════════ FEEDBACK MODAL ═══════════════════════════ -->
+<div class="modal-overlay" id="feedbackModal" style="display:none">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3><i class="fa-solid fa-star"></i> Share Feedback</h3>
+      <button class="modal-close" onclick="closeFeedback()">×</button>
+    </div>
+    <div class="modal-body">
+      <p>Was this response helpful?</p>
+      <div class="rating-btns">
+        <button class="rate-btn like" onclick="submitFeedback('like')">
+          <i class="fa-solid fa-thumbs-up"></i> Helpful
+        </button>
+        <button class="rate-btn dislike" onclick="submitFeedback('dislike')">
+          <i class="fa-solid fa-thumbs-down"></i> Not Helpful
+        </button>
+      </div>
+      <textarea id="feedbackComment" placeholder="Optional: tell us more…" rows="3"></textarea>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>

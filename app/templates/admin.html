@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SupportAI — Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}" />
+</head>
+<body>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon"><i class="fa-solid fa-robot"></i></div>
+    <div>
+      <div class="brand-name">SupportAI</div>
+      <div class="brand-tagline">Admin Dashboard</div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="/" class="nav-item">
+      <i class="fa-solid fa-comments"></i><span>Live Chat</span>
+    </a>
+    <a href="/admin" class="nav-item active">
+      <i class="fa-solid fa-chart-line"></i><span>Analytics</span>
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="theme-toggle" id="themeToggle">
+      <i class="fa-solid fa-moon"></i> Dark Mode
+    </button>
+  </div>
+</aside>
+
+<main class="main-panel admin-main">
+  <header class="chat-header">
+    <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
+    <div class="header-bot-info">
+      <div class="bot-avatar-sm"><i class="fa-solid fa-gauge-high"></i></div>
+      <div>
+        <div class="header-bot-name">Analytics Dashboard</div>
+        <div class="header-bot-status" id="lastRefresh">Loading data…</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" onclick="loadAnalytics()" title="Refresh">
+        <i class="fa-solid fa-rotate-right"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- KPI Cards -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-icon blue"><i class="fa-solid fa-comments"></i></div>
+      <div class="kpi-body">
+        <div class="kpi-value" id="totalChats">—</div>
+        <div class="kpi-label">Total Chats</div>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon green"><i class="fa-solid fa-users"></i></div>
+      <div class="kpi-body">
+        <div class="kpi-value" id="totalSessions">—</div>
+        <div class="kpi-label">Sessions</div>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon amber"><i class="fa-solid fa-brain"></i></div>
+      <div class="kpi-body">
+        <div class="kpi-value" id="avgConfidence">—</div>
+        <div class="kpi-label">Avg Confidence</div>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon purple"><i class="fa-solid fa-thumbs-up"></i></div>
+      <div class="kpi-body">
+        <div class="kpi-value" id="satisfactionRate">—</div>
+        <div class="kpi-label">Satisfaction</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="charts-grid">
+    <div class="chart-card wide">
+      <div class="chart-title">
+        <i class="fa-solid fa-chart-area"></i> Daily Conversations (14 days)
+      </div>
+      <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">
+        <i class="fa-solid fa-chart-pie"></i> Top Intents
+      </div>
+      <div class="chart-wrap"><canvas id="intentChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Recent Conversations Table -->
+  <div class="table-card">
+    <div class="table-header">
+      <div class="chart-title"><i class="fa-solid fa-clock-rotate-left"></i> Recent Conversations</div>
+      <input class="table-search" id="tableSearch" type="text" placeholder="Filter conversations…" oninput="filterTable()" />
+    </div>
+    <div class="table-wrap">
+      <table class="conv-table" id="convTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Session</th>
+            <th>User Message</th>
+            <th>Bot Reply</th>
+            <th>Intent</th>
+            <th>Confidence</th>
+            <th>Feedback</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="convBody">
+          <tr><td colspan="8" class="empty-row">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+</body>
+</html>
