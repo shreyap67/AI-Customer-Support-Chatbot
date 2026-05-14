@@ -35,9 +35,7 @@ screenshots/
 ├── chat-dark.png      # Dark mode chat interface
 ├── chat-light.png     # Light mode chat interface
 └── admin-dashboard.png # Analytics dashboard
-```
 
-> Run the app and take screenshots of your own session!
 
 ---
 
