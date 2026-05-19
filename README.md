@@ -61,8 +61,6 @@ It ships with a real-time chat interface, per-message feedback (👍/👎), conv
 
 ## 📸 Screenshots
 
-> Add your own screenshots to the `screenshots/` directory and update the paths below.
-
 | Chat — Dark Mode | Chat — Light Mode | Admin Dashboard |
 |:-:|:-:|:-:|
 | `screenshots/chat-dark.png` | `screenshots/chat-light.png` | `screenshots/admin-dashboard.png` |
